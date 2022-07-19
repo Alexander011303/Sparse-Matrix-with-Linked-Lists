@@ -6,7 +6,7 @@
 
 void ReadFile(std::string file_name, std::vector<std::vector<int>>& grid);
 void create_linked_list(Node **point, std::vector<std::vector<int>> grid);
-
+void print_elements(Node *start);
 
 
 
@@ -23,10 +23,15 @@ int main(int argc, char* argv[])
     create_linked_list(&head, grid);
     
     
+    print_elements(head);
+    
+    
     
     
     return 0;
 }
+
+
 
 
 
@@ -60,6 +65,8 @@ void ReadFile(std::string file_name, std::vector<std::vector<int>>& grid) {
         new_row.clear();
     }
 }
+
+
 
 
 
@@ -109,4 +116,24 @@ void create_linked_list(Node **point, std::vector<std::vector<int>> grid)
            }
        }
    }
+}
+
+
+
+
+void print_elements(Node *start)
+{
+     Node *ptr = start;
+     
+     //to show what each value represents in the linked list is
+     //the first value is the row postion
+     //the second value is the column postion
+     //the third value is the data that the node is holding
+     std::cout << "(row position, column position, value) ";
+     while (ptr != NULL)
+     {
+         std::cout << ptr->row << ", " << ptr->col << ", " << ptr->data << " ---> ";
+         ptr = ptr->next;
+     }
+     std::cout << "NULL" << std::endl;
 }
