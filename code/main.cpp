@@ -2,11 +2,15 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
+#include <string>
 #include "node.h"
+
 
 void ReadFile(std::string file_name, std::vector<std::vector<int>>& grid);
 void create_linked_list(Node **point, std::vector<std::vector<int>> grid);
 void print_elements(Node *start);
+int search_2D_array(std::vector<std::vector<int>> grid, int num);
+int search_linked_list(Node **start, int num);
 
 
 
@@ -15,6 +19,7 @@ int main(int argc, char* argv[])
 {
     
     std::string fname = std::string(argv[1]);
+    int search_num = std::stoi(std::string(argv[2]));
     
     std::vector<std::vector<int>> grid;
     ReadFile(fname, grid);
@@ -22,11 +27,15 @@ int main(int argc, char* argv[])
     Node *head = NULL;
     create_linked_list(&head, grid);
     
+    std::cout << std::endl;
     
     print_elements(head);
     
+    int array_num = search_2D_array(grid, search_num);
+    int linked_num = search_linked_list(&head, search_num);
     
-    
+    std::cout << std::endl;
+    std::cout << "2D array search: " << array_num << " / Linked List search: " << linked_num << std::endl;
     
     return 0;
 }
@@ -129,11 +138,41 @@ void print_elements(Node *start)
      //the first value is the row postion
      //the second value is the column postion
      //the third value is the data that the node is holding
-     std::cout << "(row position, column position, value) ";
+     std::cout << "(row position, column position, value): ";
      while (ptr != NULL)
      {
          std::cout << ptr->row << ", " << ptr->col << ", " << ptr->data << " ---> ";
          ptr = ptr->next;
      }
      std::cout << "NULL" << std::endl;
+}
+
+
+int search_2D_array(std::vector<std::vector<int>> grid, int num)
+{
+    int count = 0;
+    for(int i = 0; i < grid.size(); i++)
+    {
+        for(int j = 0; j < grid[0].size(); j++)
+        {
+            count++;
+            if(grid[i][j] == num)
+            {
+                return count;
+            }
+        }
+    }
+    return count;
+}
+
+int search_linked_list(Node **start, int num)
+{
+    int count = 0;
+    Node *ptr = *start;
+    while (ptr->next != NULL || num != ptr->data)
+    {
+        count++;
+        ptr = ptr->next; 
+    }
+    return count;
 }
